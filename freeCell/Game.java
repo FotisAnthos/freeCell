@@ -13,15 +13,18 @@ public class Game {
 	private ArrayList<Card> freeCells;
 	private static ArrayList<Pile> trableau;
 	private ArrayList<Pile> foundations;
+	private String method;
 	
 	
-	public Game(String generatedPuzzlePath) {
+	public Game(String generatedPuzzlePath, String method) {
 		Game.path = generatedPuzzlePath;
+		this.method = method;
 		initialize();
 		/*for(int i=0;i<NoOfPiles;i++){
 			System.out.println("Stack" + i + ":");
 			trableau.get(i).printPile();
 		}*/
+		
 		
 		
 		
@@ -44,13 +47,13 @@ public class Game {
 		//Creation of the initial table image
 		trableau = new ArrayList<Pile>();
 		for(i=0;i<8;i++){
-			trableau.add(new Pile());
+			trableau.add(new Pile(false));
 		}
 		
 		freeCells = new ArrayList<Card>();
 		foundations = new ArrayList<Pile>();
 		for(i=0;i<4;i++){
-			foundations.add(new Pile());
+			foundations.add(new Pile(true));
 		}
 		
 		//Insertion of randomized card piles
