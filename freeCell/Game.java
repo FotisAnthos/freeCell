@@ -14,6 +14,7 @@ public class Game {
 	private static ArrayList<Pile> trableau;
 	private ArrayList<Pile> foundations;
 	private String method;
+	private SearchTree tree;
 
 
 	public Game(String generatedPuzzlePath, String method) {
@@ -28,6 +29,7 @@ public class Game {
 		long tStart = System.currentTimeMillis();	//Marking the start of the attempt 
 
 		//TODO Magic Area
+		tree = new SearchTree(freeCells, trableau, foundations);
 
 		//TODO Some more Magic
 
@@ -38,23 +40,6 @@ public class Game {
 	}
 
 
-
-
-
-
-
-
-
-	private boolean isValid(Pile from, Pile to){
-		if(to.isFoundation()){
-			if((from.getTop().getType() == from.getTop().getType()) && (from.getTop().getNo() == (to.getTop().getNo()+1)))
-				return true;
-		}
-		else if(from.getTop().getColour() != to.getTop().getColour() && (from.getTop().getNo() == (to.getTop().getNo()-1)))
-			return true;
-		return false;
-
-	}
 
 	// This method prepares a new free cell game	
 	private void initialize() {
@@ -105,19 +90,13 @@ public class Game {
 						ch = (char)i;
 						temp += ch;
 					}
-
 					//System.out.println(type + temp);
 					Card newCard = new Card(type, temp);
-
-					trableau.get(column).AddCard(newCard);
-
+					trableau.get(column).putCardInPile(newCard);
 				}
-
-
 			}
 
 			fileReader.close();
-
 
 		}catch(IOException i)
 		{
@@ -125,7 +104,6 @@ public class Game {
 			i.printStackTrace();
 			return false;
 		}
-
 		return true;
 	}
 

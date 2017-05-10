@@ -1,11 +1,10 @@
 package freeCell;
 
-
+/*
 
 public class Temp {
 
 
-	/*	
 	public void bfs()
 	{
 		// BFS uses Queue data structure
@@ -51,9 +50,22 @@ public class Temp {
 
 
 Class Node {
-   Char data;
-   Public Node(char c) {
-      this.data=c;
-   }
-	 */
+	Char data;
+	Public Node(char c) {
+		this.data=c;
+	}
+
+
+	private boolean isValid(Pile from, Pile to){
+		if(to.isFoundation()){
+			if((from.peekTop().getType() == from.peekTop().getType()) && (from.peekTop().getNo() == (to.peekTop().getNo()+1)))
+				return true;
+		}
+		else if(from.peekTop().getColour() != to.peekTop().getColour() && (from.peekTop().getNo() == (to.peekTop().getNo()-1)))
+			return true;
+		return false;
+
+	}
+
 }
+*/

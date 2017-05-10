@@ -7,3 +7,6 @@
 /QuadTree$Node.class
 /SearchTree$Node.class
 /SearchTree.class
+/Node.class
+/SearchTree$Moves.class
+/SearchTree$Move.class

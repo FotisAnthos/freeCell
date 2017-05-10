@@ -1,10 +1,8 @@
 package freeCell;
 
-import java.io.IOException;
-
 public class Main {
 
-	public static int main(String[] args){
+	public static void main(String[] args){
 		int N=13;
 		String NoOfCardsPerDeckType = "13";
 		String path = "C:\\Users\\fotis\\workspace\\freeCell\\external\\generator.exe";
@@ -12,7 +10,7 @@ public class Main {
 		String method, input_path, output_path;
 
 		method = "";
-		if(args[0].contentEquals("breadth"))
+		/*		if(args[0].contentEquals("breadth"))
 			method = "breadth";
 		else if(args[0].contentEquals("depth"))
 			method = "depth";
@@ -31,7 +29,7 @@ public class Main {
 
 
 		NoOfCardsPerDeckType = Integer.toString(N);
-		/*try { //Running generator.exe to create a new puzzle in file test with 13 cards per deck type
+		try { //Running generator.exe to create a new puzzle in file test with 13 cards per deck type
 			Process p = new ProcessBuilder(path, output_path, "1", "1", NoOfCardsPerDeckType).start();
 			try {
 				p.waitFor();
@@ -42,11 +40,12 @@ public class Main {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return 3;
-		}*/
+			return;
+		}
+		 */
 
 		new Game(generatedPuzzlePath, method);		
-		return 0;
+		return;
 
 	}
 
