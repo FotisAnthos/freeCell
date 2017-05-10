@@ -5,17 +5,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Game {
-	
-	private static final int NoOfPiles = 8;
+
+	private static final int NoOfPiles = 8; // TODO remove this if possible
 
 	private static String path;
-	
+
 	private ArrayList<Card> freeCells;
 	private static ArrayList<Pile> trableau;
 	private ArrayList<Pile> foundations;
 	private String method;
-	
-	
+
+
 	public Game(String generatedPuzzlePath, String method) {
 		Game.path = generatedPuzzlePath;
 		this.method = method;
@@ -24,24 +24,39 @@ public class Game {
 			System.out.println("Stack" + i + ":");
 			trableau.get(i).printPile();
 		}*/
-		
-		
-		
-		
+		System.out.println("Solving free Cell puzzle with " + method + " ...");
+		long tStart = System.currentTimeMillis();	//Marking the start of the attempt 
+
+		//TODO Magic Area
+
+		//TODO Some more Magic
+
+		long tEnd = System.currentTimeMillis(); 	//Marking the end of the attempt 
+		long tDelta = tEnd - tStart;
+		double elapsedSeconds = tDelta / 1000.0;
+		System.out.println("Solving free Cell puzzle with " + method + " took " + Double.toString(elapsedSeconds));
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
+	private boolean isValid(Pile from, Pile to){
+		if(to.isFoundation()){
+			if((from.getTop().getType() == from.getTop().getType()) && (from.getTop().getNo() == (to.getTop().getNo()+1)))
+				return true;
+		}
+		else if(from.getTop().getColour() != to.getTop().getColour() && (from.getTop().getNo() == (to.getTop().getNo()-1)))
+			return true;
+		return false;
+
+	}
+
+	// This method prepares a new free cell game	
 	private void initialize() {
 		int i;
 		//Creation of the initial table image
@@ -49,65 +64,71 @@ public class Game {
 		for(i=0;i<8;i++){
 			trableau.add(new Pile(false));
 		}
-		
+
 		freeCells = new ArrayList<Card>();
 		foundations = new ArrayList<Pile>();
 		for(i=0;i<4;i++){
 			foundations.add(new Pile(true));
 		}
-		
+
 		//Insertion of randomized card piles
 		if(! retrieve()) System.out.println("Retrieval Failed!");
 		else System.out.println("New game Created!");
 	}
 
+	// This method reads a file containing a free cell puzzle and stores the numbers
+	// Input:
+	//			nothing
+	// Output:
+	//			true --> Successful read.
+	//			false --> Unsuccessful read
 	public static boolean retrieve() {
-		
+
 		String temp;
 		char type;
-		
+
 		try
-	      {
+		{
 			FileReader fileReader = new FileReader(path);
-			 
+
 			int i, column;
 			column =0;
-			 
+
 			while((i =  fileReader.read())!=-1){
-			   char ch = (char)i;
-			   if(ch=='\n') column++;
-			   if(ch == 'S' || ch == 'H' || ch == 'D' || ch == 'C'){		//reads card type
-				   type = ch;
-				   
-				   temp = "";
-				   while((i = fileReader.read())!=-1 && (i>='0' && i<='9')){//reads card value
-					   ch = (char)i;
-					   temp += ch;
-				   }
-				   
-				   //System.out.println(type + temp);
-				   Card newCard = new Card(type, temp);
-				   
-				   trableau.get(column).AddCard(newCard);
-				   	   
-			   }
-			   
-			   
+				char ch = (char)i;
+				if(ch=='\n') column++;
+				if(ch == 'S' || ch == 'H' || ch == 'D' || ch == 'C'){		//reads card type
+					type = ch;
+
+					temp = "";
+					while((i = fileReader.read())!=-1 && (i>='0' && i<='9')){//reads card value
+						ch = (char)i;
+						temp += ch;
+					}
+
+					//System.out.println(type + temp);
+					Card newCard = new Card(type, temp);
+
+					trableau.get(column).AddCard(newCard);
+
+				}
+
+
 			}
-			
+
 			fileReader.close();
-	        
-	         
-	      }catch(IOException i)
-	      {
-	    	  System.out.println("Failed to read file");
-	         i.printStackTrace();
-	         return false;
-	      }
-		
+
+
+		}catch(IOException i)
+		{
+			System.out.println("Failed to read file");
+			i.printStackTrace();
+			return false;
+		}
+
 		return true;
 	}
 
-	
+
 
 }
