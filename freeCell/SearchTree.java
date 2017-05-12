@@ -26,19 +26,18 @@ public class SearchTree {
 		return root;
 	}
 
-
 	private void build(Node node) {
 		//TODO check the table for possible moves
+		if(node.goal())
+			return;
 
-		while(true){
-
-			possibleMoves(node);
-			while(!moves.isEmpty()){
-				Node newnode = makeAMove(moves.remove());
-				node.addChild(newnode);	
-				build(newnode);
-			}
+		possibleMoves(node);
+		while(!moves.isEmpty()){
+			Node newnode = makeAMove(moves.remove());
+			node.addChild(newnode);	
+			build(newnode);
 		}
+
 	}
 
 	private boolean possibleMoves(Node aNode){

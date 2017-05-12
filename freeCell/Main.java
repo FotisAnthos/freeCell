@@ -3,13 +3,13 @@ package freeCell;
 public class Main {
 
 	public static void main(String[] args){
-		int N=13;
-		String NoOfCardsPerDeckType = "13";
-		String path = "C:\\Users\\fotis\\workspace\\freeCell\\external\\generator.exe";
+	//	int N=13;
+	//	String NoOfCardsPerDeckType = "13";
+	//	String path = "C:\\Users\\fotis\\workspace\\freeCell\\external\\generator.exe";
 		String input_path = "C:\\Users\\fotis\\workspace\\freeCell\\test1.txt";
 		String output_path = "C:\\Users\\fotis\\workspace\\freeCell\\solution.txt";
 		String method;
-
+		syntax_message();
 		method = "";
 	/*	if(args[0].contentEquals("breadth"))
 			method = "breadth";
