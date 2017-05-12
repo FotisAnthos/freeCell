@@ -9,8 +9,8 @@ public class Main {
 		String input_path = "C:\\Users\\fotis\\workspace\\freeCell\\test1.txt";
 		String output_path = "C:\\Users\\fotis\\workspace\\freeCell\\solution.txt";
 		String method;
-		syntax_message();
-		method = "";
+
+		method = "breadth";
 	/*	if(args[0].contentEquals("breadth"))
 			method = "breadth";
 		else if(args[0].contentEquals("depth"))
@@ -45,7 +45,8 @@ public class Main {
 		}
 		 */
 
-		new Game(input_path, output_path, method);		
+		new Game(input_path, output_path, method);	
+		System.out.println("Done");
 		return;
 
 	}

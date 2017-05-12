@@ -26,10 +26,10 @@ public class SearchTree {
 		return root;
 	}
 
-	private void build(Node node) {
+	private boolean build(Node node) {
 		//TODO check the table for possible moves
 		if(node.goal())
-			return;
+			return false;
 
 		possibleMoves(node);
 		while(!moves.isEmpty()){
@@ -37,7 +37,7 @@ public class SearchTree {
 			node.addChild(newnode);	
 			build(newnode);
 		}
-
+		return true;
 	}
 
 	private boolean possibleMoves(Node aNode){
@@ -47,15 +47,15 @@ public class SearchTree {
 			for(i=0; i < freeCells.size(); i++){ //for any freecell card:
 				for(j=0; j<4; j++){//check if it can be moved to the foundation pile
 					if(foundations.get(j).validMove(freeCells.get(i))){
-						moves.add(new Move(aNode, "foundation", -1, j, freeCells.get(i)));
+						moves.add(new Move(aNode, "foundation "+ freeCells.get(i).toString(), -1, j, freeCells.get(i)));
 					}	
 				}
 				for(j=0; j < trableau.size(); j++){
 					if(trableau.get(j).validMove(freeCells.get(i))){//check if a card from the freeCard can be moved to trableau.get(j) Pile
 						if(trableau.get(j).isEmpty())
-							moves.add(new Move(aNode, "newstack", -1, j, freeCells.get(i)));
+							moves.add(new Move(aNode, "newstack" +freeCells.get(i).toString(), -1, j, freeCells.get(i)));
 						else
-							moves.add(new Move(aNode, "stack", -1, j, freeCells.get(i)));
+							moves.add(new Move(aNode, "stack" +freeCells.get(i).toString(), -1, j, freeCells.get(i)));
 					}					
 				}
 			}
@@ -65,16 +65,16 @@ public class SearchTree {
 			for(j=0; j< trableau.size(); j++){
 				if(trableau.get(j).validMove(trableau.get(i).peekTop())){//check if a card from the trableau.get(i) pile can be moved to trableau.get(j) Pile
 					if(trableau.get(j).isEmpty())
-						moves.add(new Move(aNode, "newstack", i, j, null));
+						moves.add(new Move(aNode, "newstack" +trableau.get(i).toString(), i, j, null));
 					else					
-						moves.add(new Move(aNode, "stack", i, j, null));
+						moves.add(new Move(aNode, "stack" +trableau.get(i).toString(), i, j, null));
 				}
 				if(freeCells.size()<4){ //if available free cell there is a possible move
-					Move move1 = new Move(aNode, "freecell", i, -1, null);
+					Move move1 = new Move(aNode, "freecell" +trableau.get(i).toString(), i, -1, null);
 					moves.add(move1);
 				}
 				if(foundations.get(j).validMove(trableau.get(i).peekTop())){
-					moves.add(new Move(aNode, "foundation", i, j, null));
+					moves.add(new Move(aNode, "foundation" +trableau.get(i).toString(), i, j, null));
 				}
 			}
 		}

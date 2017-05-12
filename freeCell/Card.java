@@ -26,11 +26,13 @@ public class Card {
 		return colour;
 	}
 
-	public void printCardDetails(){
-		System.out.println(type +"-"+ val);
 
+	@Override
+	public String toString() {
+		return Integer.toString(type) + Integer.toString(val); 
 	}
 
+	
 
 
 
