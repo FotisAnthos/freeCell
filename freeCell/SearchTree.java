@@ -53,10 +53,10 @@ public class SearchTree {
 				for(j=0; j<4; j++){//check if it can be moved to the foundation pile
 					if(foundations.get(j).validMove(freeCells.get(i))){
 						moves.add(new Move(aNode, "foundation", -1, j, freeCells.get(i)));
-					}
+					}	
 				}
-				for(j=0; j < freeCells.size(); j++){
-					if(trableau.get(j).validMove(trableau.get(i).peekTop())){//check if a card from the trableau.get(i) pile can be moved to trableau.get(j) Pile
+				for(j=0; j < trableau.size(); j++){
+					if(trableau.get(j).validMove(freeCells.get(i))){//check if a card from the freeCard can be moved to trableau.get(j) Pile
 						if(trableau.get(j).isEmpty())
 							moves.add(new Move(aNode, "newstack", -1, j, freeCells.get(i)));
 						else
@@ -65,6 +65,7 @@ public class SearchTree {
 				}
 			}
 		}
+		
 		for(i=0; i< trableau.size();i++){//check for valid moves from the trableaus
 			for(j=0; j< trableau.size(); j++){
 				if(trableau.get(j).validMove(trableau.get(i).peekTop())){//check if a card from the trableau.get(i) pile can be moved to trableau.get(j) Pile
@@ -111,7 +112,7 @@ public class SearchTree {
 			trableau = SearchTree.this.trableau;
 			foundations = SearchTree.this.foundations;
 
-			node = new Node(null, type, freecells, foundations, foundations);//initialization to get rid of the relative error.
+			node = new Node(null, type, freecells, foundations, foundations);//initialization
 			if(type.equals("freecell")){
 				freecells.add(trableau.get(sourcePile).RemoveCard());
 				node = new Node(parent, type, freecells, trableau, foundations);
@@ -141,12 +142,13 @@ public class SearchTree {
 			else
 				System.err.println("ERROR SearchTree. class Move method makeMove()");
 			return node;
-
 		}
+	}
+
+	public Node getRoot() {
+		return root;
+	}
 
 
-
-
-	}	
 
 }

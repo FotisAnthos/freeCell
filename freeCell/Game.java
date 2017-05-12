@@ -8,7 +8,8 @@ public class Game {
 
 	private static final int NoOfPiles = 8; // TODO remove this if possible
 
-	private static String path;
+	private static String input_path;
+	private String output_path;
 
 	private ArrayList<Card> freeCells;
 	private static ArrayList<Pile> trableau;
@@ -17,8 +18,9 @@ public class Game {
 	private SearchTree tree;
 
 
-	public Game(String generatedPuzzlePath, String method) {
-		Game.path = generatedPuzzlePath;
+	public Game(String input_path, String output_path, String method) {
+		this.input_path = input_path;
+		this.output_path = output_path;
 		this.method = method;
 		initialize();
 		/*for(int i=0;i<NoOfPiles;i++){
@@ -29,7 +31,8 @@ public class Game {
 		long tStart = System.currentTimeMillis();	//Marking the start of the attempt 
 
 		//TODO Magic Area
-		tree = new SearchTree(freeCells, trableau, foundations);
+		tree = new SearchTree(freeCells, trableau, foundations);//creates the search tree
+		new Methods(method, tree.getRoot(), output_path);
 
 		//TODO Some more Magic
 
@@ -74,7 +77,7 @@ public class Game {
 
 		try
 		{
-			FileReader fileReader = new FileReader(path);
+			FileReader fileReader = new FileReader(input_path);
 
 			int i, column;
 			column =0;

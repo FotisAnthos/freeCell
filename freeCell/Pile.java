@@ -6,26 +6,28 @@ public class Pile {
 
 	private Stack<Card> stack;
 	private boolean isFoundation;
+	private int sumOfCards;
 
 	public Pile(boolean isFoundation) {
 		this.isFoundation = isFoundation; 
 		this.stack = new Stack<Card>();
+		this.sumOfCards=0;
 	}
 
 	public void putCardInPile(Card aCard){ //only for the initialization of the trableaus
 		stack.push(aCard);
+		sumOfCards++;
 	}
-
-
 
 	public void AddCard(Card aCard){
 		if(validMove(aCard)) stack.push(aCard);
+		sumOfCards++;
 	}
 
 	public boolean validMove(Card aCard){
 		if(stack.isEmpty()) return true;
 		if(isFoundation){
-			if(stack.peek().getType() == aCard.getType() && stack.peek().getNo() == aCard.getNo()-1){  //TODO
+			if(stack.peek().getType() == aCard.getType() && stack.peek().getNo() == aCard.getNo()-1){  //TODO check again
 				return true;
 			}
 			if(stack.isEmpty() && aCard.getNo() == 0) return true;
@@ -39,8 +41,8 @@ public class Pile {
 	public Card RemoveCard(){
 		if(isFoundation){
 			System.out.println("ERROR\nAttempting to remove from foundation!!");
-			
 		}
+		sumOfCards--;
 		return stack.pop();
 	}
 
@@ -66,7 +68,9 @@ public class Pile {
 		stack.peek().printCardDetails();
 	}
 
-
+	public int getSumOfCards() {
+		return sumOfCards;
+	}
 
 
 }

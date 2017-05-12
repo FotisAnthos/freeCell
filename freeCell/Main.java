@@ -6,18 +6,19 @@ public class Main {
 		int N=13;
 		String NoOfCardsPerDeckType = "13";
 		String path = "C:\\Users\\fotis\\workspace\\freeCell\\external\\generator.exe";
-		String generatedPuzzlePath = "C:\\Users\\fotis\\workspace\\freeCell\\test1.txt";
-		String method, input_path, output_path;
+		String input_path = "C:\\Users\\fotis\\workspace\\freeCell\\test1.txt";
+		String output_path = "C:\\Users\\fotis\\workspace\\freeCell\\solution.txt";
+		String method;
 
 		method = "";
-		/*		if(args[0].contentEquals("breadth"))
+	/*	if(args[0].contentEquals("breadth"))
 			method = "breadth";
 		else if(args[0].contentEquals("depth"))
 			method = "depth";
 		else if(args[0].contentEquals("best"))
 			method = "best";
-		else if(args[0].contentEquals("A*search"))
-			method = "A*search";
+		else if(args[0].contentEquals("astar"))
+			method = "astar";
 		else syntax_message();
 
 		if(args[1] != null)
@@ -44,7 +45,7 @@ public class Main {
 		}
 		 */
 
-		new Game(generatedPuzzlePath, method);		
+		new Game(input_path, output_path, method);		
 		return;
 
 	}
@@ -59,7 +60,7 @@ public class Main {
 		System.out.println("\t<input_file> = String indicating the input file.\n");
 		System.out.println("\t<output_file> = String indicating the output file.\n\n");
 		//System.out.println("e.g. the call \n\n\t\n");
-		System.out.println("Constraints: Possible methods breadth, depth, best, A*search.");
+		System.out.println("Constraints: Possible methods breadth, depth, best, astar.");
 
 
 		System.exit(2);
