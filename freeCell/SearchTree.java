@@ -1,6 +1,7 @@
 package freeCell;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class SearchTree {
 	private Node root;
@@ -8,7 +9,7 @@ public class SearchTree {
 	private ArrayList<Pile> trableau;
 	private ArrayList<Pile> foundations;
 
-	private ArrayList<Move> moves;//temporary log of possible moves for a given Node
+	private Queue<Move> moves;//temporary log of possible moves for a given Node
 
 	public SearchTree(ArrayList<Card> freeCells, ArrayList<Pile> trableau, ArrayList<Pile> foundations){
 		this.trableau = trableau;
@@ -17,32 +18,27 @@ public class SearchTree {
 
 		this.root = new Node(null, "root", freeCells, trableau, foundations);
 
-		build();
+		build(root);
 	}
 
-	private void build() {
-		//TODO check the entire table for possible moves
-		int i;
-		Node currNode = root;
-		Node tempNode;
 
-		ArrayList<Card> freeCells;
-		ArrayList<Pile> trableau;
-		ArrayList<Pile> foundations;
+	public Node getRoot() {
+		return root;
+	}
+
+
+	private void build(Node node) {
+		//TODO check the table for possible moves
 
 		while(true){
-			i=0;
-			possibleMoves(currNode);
+
+			possibleMoves(node);
 			while(!moves.isEmpty()){
-
-
-
+				Node newnode = makeAMove(moves.remove());
+				node.addChild(newnode);	
+				build(newnode);
 			}
 		}
-
-
-
-
 	}
 
 	private boolean possibleMoves(Node aNode){
@@ -65,7 +61,7 @@ public class SearchTree {
 				}
 			}
 		}
-		
+
 		for(i=0; i< trableau.size();i++){//check for valid moves from the trableaus
 			for(j=0; j< trableau.size(); j++){
 				if(trableau.get(j).validMove(trableau.get(i).peekTop())){//check if a card from the trableau.get(i) pile can be moved to trableau.get(j) Pile
@@ -75,7 +71,8 @@ public class SearchTree {
 						moves.add(new Move(aNode, "stack", i, j, null));
 				}
 				if(freeCells.size()<4){ //if available free cell there is a possible move
-					moves.add(new Move(aNode, "freecell", i, -1, null));
+					Move move1 = new Move(aNode, "freecell", i, -1, null);
+					moves.add(move1);
 				}
 				if(foundations.get(j).validMove(trableau.get(i).peekTop())){
 					moves.add(new Move(aNode, "foundation", i, j, null));
@@ -86,68 +83,94 @@ public class SearchTree {
 		return false;
 	}
 
-	class Move{//a "log" of a possible move found at SearchTree.possibleMoves
-		// TODO Auto-generated method stub
-		private Node parent;
-		private String type;
-		private int destinationPile;
-		private Card freeCell;
-		private int sourcePile;
+	public Node makeAMove(Move move){
+		Node node =new Node(null, null, freeCells, foundations, foundations);
 
-		public Move(Node parent, String type, int sourcePile, int destinationPile, Card freeCell) {
-			this.type = type;
-			this.sourcePile = sourcePile;
-			this.destinationPile = destinationPile;
-			this.freeCell = freeCell;
+		ArrayList<Card> freecells;
+		ArrayList<Pile> trableau;
+		ArrayList<Pile> foundations;
+
+		freecells = this.freeCells;
+		trableau = this.trableau;
+		foundations = this.foundations;
+
+		if(move.getType().equals("freecell")){
+			freecells.add(trableau.get(move.getSourcePile()).RemoveCard());
+			node = new Node(move.getParent(), move.getType(), freecells, trableau, foundations);
 		}
-
-		public Node makeAMove(){
-			Node node;
-
-			ArrayList<Card> freecells;
-			ArrayList<Pile> trableau;
-			ArrayList<Pile> foundations;
-
-			freecells = SearchTree.this.freeCells;
-			trableau = SearchTree.this.trableau;
-			foundations = SearchTree.this.foundations;
-
-			node = new Node(null, type, freecells, foundations, foundations);//initialization
-			if(type.equals("freecell")){
-				freecells.add(trableau.get(sourcePile).RemoveCard());
-				node = new Node(parent, type, freecells, trableau, foundations);
+		else if(move.getType().equals("newstack") || (move.getType().equals("stack"))){
+			if(move.getFreeCell().equals(null)){
+				trableau.get(move.getDestinationPile()).AddCard(trableau.get(move.getSourcePile()).RemoveCard());
+				node = new Node(move.getParent(), move.getType(), freecells, trableau, foundations);
 			}
-			else if(type.equals("newstack") || (type.equals("stack"))){
-				if(freeCell.equals(null)){
-					trableau.get(destinationPile).AddCard(trableau.get(sourcePile).RemoveCard());
-					node = new Node(parent, type, freecells, trableau, foundations);
-				}
-				else{
-					trableau.get(destinationPile).AddCard(freeCell);
-					freecells.remove(freeCell);
-					node = new Node(parent, type, freecells, trableau, foundations);
-				}
+			else{
+				trableau.get(move.getDestinationPile()).AddCard(move.getFreeCell());
+				freecells.remove(move.getFreeCell());
+				node = new Node(move.getParent(), move.getType(), freecells, trableau, foundations);
 			}
-			else if(type.equals("foundation")){
-				if(freeCell.equals(null)){
-					foundations.get(destinationPile).AddCard(trableau.get(sourcePile).RemoveCard());
-					node = new Node(parent, type, freecells, trableau, foundations);
-				}
-				else{
-					foundations.get(destinationPile).AddCard(freeCell);
-					freecells.remove(freeCell);
-					node = new Node(parent, type, freecells, trableau, foundations);
-				}
-			}
-			else
-				System.err.println("ERROR SearchTree. class Move method makeMove()");
-			return node;
 		}
+		else if(move.getType().equals("foundation")){
+			if(move.getFreeCell().equals(null)){
+				foundations.get(move.getDestinationPile()).AddCard(trableau.get(move.getSourcePile()).RemoveCard());
+				node = new Node(move.getParent(), move.getType(), freecells, trableau, foundations);
+			}
+			else{
+				foundations.get(move.getDestinationPile()).AddCard(move.getFreeCell());
+				freecells.remove(move.getFreeCell());
+				node = new Node(move.getParent(), move.getType(), freecells, trableau, foundations);
+			}
+		}
+		else
+			System.err.println("ERROR SearchTree. class Move method makeMove()");
+		return node;
+	}
+}
+
+class Move{	//a "log" of a possible move found at SearchTree.possibleMoves
+	// TODO Auto-generated method stub
+	private Node parent;
+	private String type;
+	private int destinationPile;
+	private Card freeCell;
+	private int sourcePile;
+
+	public Move(Node parent, String type, int sourcePile, int destinationPile, Card freeCell) {
+		this.type = type;
+		this.sourcePile = sourcePile;
+		this.destinationPile = destinationPile;
+		this.freeCell = freeCell;
 	}
 
-	public Node getRoot() {
-		return root;
+
+	public Node getParent() {
+		return parent;
 	}
+
+
+
+	public String getType() {
+		return type;
+	}
+
+
+
+	public int getDestinationPile() {
+		return destinationPile;
+	}
+
+
+
+	public Card getFreeCell() {
+		return freeCell;
+	}
+
+
+
+	public int getSourcePile() {
+		return sourcePile;
+	}
+
+
 
 
 

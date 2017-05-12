@@ -6,22 +6,16 @@ import java.util.ArrayList;
 
 public class Game {
 
-	private static final int NoOfPiles = 8; // TODO remove this if possible
-
 	private static String input_path;
-	private String output_path;
 
 	private ArrayList<Card> freeCells;
 	private static ArrayList<Pile> trableau;
 	private ArrayList<Pile> foundations;
-	private String method;
 	private SearchTree tree;
 
 
 	public Game(String input_path, String output_path, String method) {
-		this.input_path = input_path;
-		this.output_path = output_path;
-		this.method = method;
+		Game.input_path = input_path;
 		initialize();
 		/*for(int i=0;i<NoOfPiles;i++){
 			System.out.println("Stack" + i + ":");
