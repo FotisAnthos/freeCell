@@ -10,6 +10,7 @@ public class Node {
 	private ArrayList<Card> freeCells;
 	private ArrayList<Pile> trableau;
 	private ArrayList<Pile> foundations;
+	private int heur;
 
 	public Node(Node father, String action, ArrayList<Card> freeCells, ArrayList<Pile> trableau, ArrayList<Pile> foundations){
 		this.children = null;
@@ -19,6 +20,7 @@ public class Node {
 		this.freeCells = freeCells;
 		this.foundations = foundations;
 		this.father = father;
+		heur = calcHeur();
 	}
 
 	public void addChild(Node aNode){
@@ -60,14 +62,18 @@ public class Node {
 	public ArrayList<Pile> getFoundations() {
 		return foundations;
 	}
-
-	public int heur(){
+	
+	public int calcHeur(){
 		int i, sum=0;
 
 		for(i=0; i< foundations.size(); i++){
 			sum = sum + foundations.get(i).getSumOfCards();
 		}
 		return sum;
+	}
+	
+	public int heur(){
+		return heur;
 	}
 
 	public boolean goal(){//checks if the node is a solution-goal

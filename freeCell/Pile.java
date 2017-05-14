@@ -62,10 +62,10 @@ public class Pile {
 		int i;
 
 		for(i=0; i<stack.size(); i++){
-			stack.get(i).printCardDetails();
+			System.out.println(stack.get(i).toString() + "\n");
+			
 		}
-		System.out.println("Top:");
-		stack.peek().printCardDetails();
+		System.out.println("Top: " +stack.peek().toString());		
 	}
 
 	public int getSumOfCards() {
