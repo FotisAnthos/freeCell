@@ -1,6 +1,7 @@
 package freeCell;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class SearchTree {
@@ -17,7 +18,8 @@ public class SearchTree {
 		this.foundations = foundations;
 
 		this.root = new Node(null, "root", freeCells, trableau, foundations);
-
+		Queue<Move> moves = new LinkedList<Move>();
+		this.moves = moves;
 		build(root);
 	}
 
@@ -30,7 +32,6 @@ public class SearchTree {
 		//TODO check the table for possible moves
 		if(node.goal())
 			return false;
-
 		possibleMoves(node);
 		while(!moves.isEmpty()){
 			Node newnode = makeAMove(moves.remove());
@@ -70,8 +71,8 @@ public class SearchTree {
 						moves.add(new Move(aNode, "stack" +trableau.get(i).toString(), i, j, null));
 				}
 				if(freeCells.size()<4){ //if available free cell there is a possible move
-					Move move1 = new Move(aNode, "freecell" +trableau.get(i).toString(), i, -1, null);
-					moves.add(move1);
+					
+					moves.add(new Move(aNode, "freecell" +trableau.get(i).toString(), i, -1, null));
 				}
 				if(foundations.get(j).validMove(trableau.get(i).peekTop())){
 					moves.add(new Move(aNode, "foundation" +trableau.get(i).toString(), i, j, null));

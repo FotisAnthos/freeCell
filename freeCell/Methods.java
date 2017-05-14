@@ -30,7 +30,20 @@ public class Methods {
 	}
 
 	private void best(Node root) {
-		// TODO Auto-generated method stub
+		int i, maxheur;
+		Node tempNode = root;
+		Node selection;
+		while(!tempNode.goal()){
+			maxheur = tempNode.getChild(0).heur();
+			selection = tempNode.getChild(0);
+			for(i=1; i< tempNode.NoOfChildren(); i++){
+				if(tempNode.getChild(i).heur() > maxheur){
+					maxheur = tempNode.getChild(i).heur();
+					selection = tempNode.getChild(i);
+				}
+			}
+			tempNode = selection;
+		}
 
 	}
 
