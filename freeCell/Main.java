@@ -1,17 +1,17 @@
 package freeCell;
 
+
 public class Main {
 
 	public static void main(String[] args){
 	//	int N=13;
 	//	String NoOfCardsPerDeckType = "13";
-	//	String path = "C:\\Users\\fotis\\workspace\\freeCell\\external\\generator.exe";
-		String input_path = "C:\\Users\\fotis\\workspace\\freeCell\\test1.txt";
-		String output_path = "C:\\Users\\fotis\\workspace\\freeCell\\solution.txt";
-		String method;
+		String path = "..\\generator.exe";
+		String input_path = "..\\test1.txt";
+		String output_path = "..\\solution.txt";
+		String method="";
 
-		method = "breadth";
-	/*	if(args[0].contentEquals("breadth"))
+		if(args[0].contentEquals("breadth"))
 			method = "breadth";
 		else if(args[0].contentEquals("depth"))
 			method = "depth";
@@ -23,13 +23,15 @@ public class Main {
 
 		if(args[1] != null)
 			input_path = args[1];
-		else input_path = "C:\\Users\\fotis\\workspace\\freeCell\\test1.txt";
+		else 
+			syntax_message();
 		if(args[2] != null)
 			output_path = args[2];
-		else output_path = "C:\\Users\\fotis\\workspace\\freeCell\\solution.txt";
+		else 
+			syntax_message();
 
 
-		NoOfCardsPerDeckType = Integer.toString(N);
+		/*
 		try { //Running generator.exe to create a new puzzle in file test with 13 cards per deck type
 			Process p = new ProcessBuilder(path, output_path, "1", "1", NoOfCardsPerDeckType).start();
 			try {
@@ -43,8 +45,8 @@ public class Main {
 			e.printStackTrace();
 			return;
 		}
-		 */
-
+		 
+*/
 		new Game(input_path, output_path, method);	
 		System.out.println("Done");
 		return;
