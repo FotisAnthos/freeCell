@@ -1,10 +1,10 @@
 package freeCell;
 
-/*
-
 public class Temp {
+	
+	//TODO class for deletion
 
-
+/*
 	public void bfs()
 	{
 		// BFS uses Queue data structure
@@ -48,7 +48,7 @@ public class Temp {
 	}
 }
 
-
+/*
 Class Node {
 	Char data;
 	Public Node(char c) {
@@ -65,7 +65,6 @@ Class Node {
 			return true;
 		return false;
 
-	}
+	}*/
 
 }
-*/

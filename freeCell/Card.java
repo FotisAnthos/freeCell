@@ -27,15 +27,12 @@ public class Card {
 	}
 
 	public void printCardDetails(){
-		System.out.println(type +"-"+ val);
+		System.out.println(type +""+ val);
 
 	}
-
-
-
-
-
-
-
+	
+	public String cardToString() {
+		return type +""+ val;
+	}
 
 }

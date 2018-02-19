@@ -16,22 +16,20 @@ public class Pile {
 		stack.push(aCard);
 	}
 
-
-
 	public void AddCard(Card aCard){
 		if(validMove(aCard)) stack.push(aCard);
 	}
 
-	public boolean validMove(Card aCard){
-		if(stack.isEmpty()) return true;
-		if(isFoundation){
-			if(stack.peek().getType() == aCard.getType() && stack.peek().getNo() == aCard.getNo()-1){  //TODO
+	public boolean validMove(Card aCard){//checks if aCard can be moved to the end of this stack-Pile
+		if(stack.isEmpty()) return true;//Στη βάση μιας στοίβας, εφόσον η στοίβα είναι άδεια, χωρίς άλλο περιορισμό.
+		if(isFoundation){//Στην κορυφή ενός foundation, εφόσον η προηγούμενη κορυφαία κάρτα του foundation είναι ίδιας "φυλής" και κατά ένα μικρότερης "αξίας" (αριθμό).
+			if(stack.peek().getType() == aCard.getType() && stack.peek().getNo() == aCard.getNo()+1){ 
 				return true;
 			}
-			if(stack.isEmpty() && aCard.getNo() == 0) return true;
+			if(stack.isEmpty() && aCard.getNo() == 0) return true;//Στη βάση ενός άδειου foundation, εφόσον η κάρτα είναι "άσσος".
 		}
-		if(stack.peek().getColour() != aCard.getColour() && stack.peek().getNo() == aCard.getNo()-1){
-			return true;
+		else if(stack.peek().getColour() != aCard.getColour() && stack.peek().getNo() == aCard.getNo()-1){
+			return true;//Στην κορυφή μιας στοίβας, εφόσον η προηγούμενη κορυφαία κάρτα της στοίβας είχε διαφορετικό χρώμα και κατά ένα μεγαλύτερη "αξία" (αριθμό).
 		}
 		return false;
 	}
@@ -39,7 +37,9 @@ public class Pile {
 	public Card RemoveCard(){
 		if(isFoundation){
 			System.out.println("ERROR\nAttempting to remove from foundation!!");
-			
+		}
+		if(isEmpty()) {
+			System.out.println("ERROR\nAttempting to remove from empty stack!!");
 		}
 		return stack.pop();
 	}
@@ -51,22 +51,20 @@ public class Pile {
 	public Card peekTop() {
 		return stack.peek();
 	}
+	
+	public int trableauSize() {
+		return stack.size();
+	}
 
 	public boolean isFoundation() {
 		return isFoundation;
 	}
 
 	public void printPile() {
-		int i;
-
-		for(i=0; i<stack.size(); i++){
+		for(int i=0; i<stack.size(); i++){
 			stack.get(i).printCardDetails();
+			System.out.print(" ");
 		}
-		System.out.println("Top:");
-		stack.peek().printCardDetails();
 	}
-
-
-
 
 }

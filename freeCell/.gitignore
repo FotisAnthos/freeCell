@@ -10,3 +10,12 @@
 /Node.class
 /SearchTree$Moves.class
 /SearchTree$Move.class
+/Methods.class
+/Methods$Data.class
+/Methods$Node.class
+/Methods$Move.class
+/Data.class
+/Move.class
+/Context.class
+/BFS.class
+/DFS.class

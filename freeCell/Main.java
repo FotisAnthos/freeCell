@@ -4,33 +4,44 @@ public class Main {
 
 	public static void main(String[] args){
 		int N=13;
-		String NoOfCardsPerDeckType = "13";
-		String path = "C:\\Users\\fotis\\workspace\\freeCell\\external\\generator.exe";
-		String generatedPuzzlePath = "C:\\Users\\fotis\\workspace\\freeCell\\test1.txt";
+		String NoOfCardsPerDeckType = "13";//TODO remove ?
+		String baseDebugPath = "C:\\Users\\fotis\\Documents\\GitHub\\freeCell";
+		String generatorPath = baseDebugPath + "\\external\\generator.exe";
+		String defaultPuzzlePath = baseDebugPath + "\\test1.txt";
 		String method, input_path, output_path;
 
-		method = "";
-		/*		if(args[0].contentEquals("breadth"))
+		boolean debug = true;
+
+		if(debug  == false) {
+			method = "";
+			if(args[0].contentEquals("breadth"))
+				method = "breadth";
+			else if(args[0].contentEquals("depth"))
+				method = "depth";
+			else if(args[0].contentEquals("best"))
+				method = "best";
+			else if(args[0].contentEquals("A*search"))
+				method = "A*search";
+			else syntax_message();
+
+			if(args[1] != null)
+				input_path = args[1];
+			else input_path = defaultPuzzlePath;
+			if(args[2] != null)
+				output_path = args[2];
+			else output_path = "C:\\Users\\fotis\\workspace\\freeCell\\solution.txt";
+		}
+
+		else {//debug == true
+			input_path = defaultPuzzlePath;
+			output_path = baseDebugPath + "\\solution.txt";
 			method = "breadth";
-		else if(args[0].contentEquals("depth"))
-			method = "depth";
-		else if(args[0].contentEquals("best"))
-			method = "best";
-		else if(args[0].contentEquals("A*search"))
-			method = "A*search";
-		else syntax_message();
+		}
 
-		if(args[1] != null)
-			input_path = args[1];
-		else input_path = "C:\\Users\\fotis\\workspace\\freeCell\\test1.txt";
-		if(args[2] != null)
-			output_path = args[2];
-		else output_path = "C:\\Users\\fotis\\workspace\\freeCell\\solution.txt";
-
-
+		/* 
 		NoOfCardsPerDeckType = Integer.toString(N);
 		try { //Running generator.exe to create a new puzzle in file test with 13 cards per deck type
-			Process p = new ProcessBuilder(path, output_path, "1", "1", NoOfCardsPerDeckType).start();
+			Process p = new ProcessBuilder(generatorPath, output_path, "1", "1", NoOfCardsPerDeckType).start();
 			try {
 				p.waitFor();
 			} catch (InterruptedException e) {
@@ -43,8 +54,7 @@ public class Main {
 			return;
 		}
 		 */
-
-		new Game(generatedPuzzlePath, method);		
+		new Game(input_path, output_path, method);		
 		return;
 
 	}
@@ -60,7 +70,6 @@ public class Main {
 		System.out.println("\t<output_file> = String indicating the output file.\n\n");
 		//System.out.println("e.g. the call \n\n\t\n");
 		System.out.println("Constraints: Possible methods breadth, depth, best, A*search.");
-
 
 		System.exit(2);
 	}
