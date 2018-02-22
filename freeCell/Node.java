@@ -10,6 +10,7 @@ public class Node {
 	private ArrayList<Pile> trableau;
 	private ArrayList<Pile> foundations;
 	private ArrayList<Move> moves;
+	private int heuristicValue;
 
 	public Node(Node parent, Move move, ArrayList<Card> freeCells, ArrayList<Pile> trableau, ArrayList<Pile> foundations){
 		this.parent = parent;
@@ -28,6 +29,22 @@ public class Node {
 		for(Node n : chilrn) {
 			children.add(n);
 		}
+	}
+
+	public int getNoCardsInFoundations() {
+		int sum=0;
+		for(Pile p : foundations) {
+			sum+= p.stackSize();
+		}
+		return sum;
+	}
+
+	public int getHeuristicValue() {
+		return heuristicValue;
+	}
+
+	public void setHeuristicValue(int heuristicValue) {
+		this.heuristicValue = heuristicValue;
 	}
 
 	public int NoOfChildren(){
@@ -54,7 +71,11 @@ public class Node {
 		ArrayList<Node> newNodes = new ArrayList<Node>();
 		possibleMoves();
 		for(Move mov : moves) {
-			newNodes.add(makeAMove(mov));
+			if(!mov.getaCell().equals(move.getaCell())) {//TODO check these 2 ifs again
+				if((mov.getSourcePile() != move.getDestinationPile()) && (mov.getDestinationPile() != move.getSourcePile())) {
+					newNodes.add(makeAMove(mov));
+				}
+			}
 		}
 		return newNodes;
 	}
@@ -81,8 +102,8 @@ public class Node {
 			}
 		}
 		//moves from trableaus
-		for(i=0; i< trableau.get(i).trableauSize();i++){//check for valid moves from the trableaus
-			for(j=0; j< trableau.get(j).trableauSize(); j++){//moves from i-Pile to j-Pile
+		for(i=0; i< trableau.get(i).stackSize();i++){//check for valid moves from the trableaus
+			for(j=0; j< trableau.get(j).stackSize(); j++){//moves from i-Pile to j-Pile
 				if(trableau.get(j).validMove(trableau.get(i).peekTop())){//check if a card from the trableau.get(i) pile can be moved to trableau.get(j) Pile
 					if(trableau.get(j).isEmpty())
 						moves.add(new Move(parent, "newstack", i, j, null));
@@ -93,7 +114,7 @@ public class Node {
 					moves.add(new Move(parent, "freecell", i, -1, null));
 				}
 			}
-			for(j=0; j< foundations.get(j).trableauSize(); j++){//moves from i-Pile to foundation
+			for(j=0; j< foundations.get(j).stackSize(); j++){//moves from i-Pile to foundation
 				if(foundations.get(j).validMove(trableau.get(i).peekTop())){
 					moves.add(new Move(parent, "foundation", i, j, null));
 				}

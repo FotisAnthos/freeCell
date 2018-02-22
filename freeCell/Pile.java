@@ -52,7 +52,7 @@ public class Pile {
 		return stack.peek();
 	}
 	
-	public int trableauSize() {
+	public int stackSize() {
 		return stack.size();
 	}
 

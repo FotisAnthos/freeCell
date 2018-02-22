@@ -19,3 +19,7 @@
 /Context.class
 /BFS.class
 /DFS.class
+/BestFirst.class
+/BestFirst$heuristicComparator.class
+/AStar.class
+/AStar$heuristicComparator.class

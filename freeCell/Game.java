@@ -92,7 +92,7 @@ public class Game {
 	// Output:
 	//			true --> Successful read.
 	//			false --> Unsuccessful read
-	private static boolean retrieve() {
+	private boolean retrieve() {
 
 		String temp;
 		char type;
@@ -132,7 +132,7 @@ public class Game {
 		return true;
 	}
 	
-	public void printSolution(Node solNode) {
+	public void printSolution(Node solNode) {//TODO modify to write to solution.txt
 		Stack<Node> solutionSteps = new Stack<Node>();
 		Node tempNode = solNode;
 		int stepCount=-1;

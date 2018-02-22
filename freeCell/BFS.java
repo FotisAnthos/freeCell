@@ -1,7 +1,7 @@
 package freeCell;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
+import java.util.LinkedList;
 import java.util.Queue;
 
 public class BFS {
@@ -14,14 +14,14 @@ public class BFS {
 			return;
 		}
 		
-		Queue<Node> fringe = new PriorityQueue<Node>();
+		Queue<Node> fringe = new LinkedList<Node>();
 		Node tempNode;
 		//0. place the root in the queue
 		fringe.add(root);
 
 		while (!fringe.isEmpty()) {
 			tempNode = fringe.poll();//1. take the first node from the queue
-
+			
 			if(tempNode.isTarget()) {//2. check if the node is a target node
 				solutionNode = tempNode;//2a. if yes appoint solution and return
 				return;

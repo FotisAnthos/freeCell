@@ -14,7 +14,7 @@ public class DFS {
 		}
 		
 		Stack<Node> fringe = new Stack<Node>();
-		//0. place the root in the queue
+		//0. place the root in the stack
 		fringe.push(root);
 		
 		while(!fringe.isEmpty()) {
